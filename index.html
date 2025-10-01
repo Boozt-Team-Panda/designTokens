@@ -1,1 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button v2 Component API - Panda Design System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Suisse Int\'l', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #241d26;
+            background-color: #ffffff;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #241d26;
+            border-bottom: 3px solid #241d26;
+            padding-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem 0;
+            color: #241d26;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e5e8;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 1.5rem 0 0.5rem 0;
+            color: #241d26;
+        }
+
+        p, li {
+            margin-bottom: 0.5rem;
+            color: #4c4d52;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: #ffffff;
+            border: 1px solid #e5e5e8;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e8;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: 500;
+            color: #241d26;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        code {
+            background-color: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #e0001a;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid #e5e5e8;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: #241d26;
+        }
+
+        .section-divider {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #e5e5e8, transparent);
+            margin: 2rem 0;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .overview-item {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #241d26;
+        }
+
+        .overview-item strong {
+            color: #241d26;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .do-dont {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .do, .dont {
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .do {
+            background-color: #e7f6eb;
+            border-left: 4px solid #0e881b;
+        }
+
+        .dont {
+            background-color: #f9e8ea;
+            border-left: 4px solid #e0001a;
+        }
+
+        .do h4, .dont h4 {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .do h4 {
+            color: #0e881b;
+        }
+
+        .dont h4 {
+            color: #e0001a;
+        }
+
+        .anatomy-list {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .anatomy-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+        }
+
+        .anatomy-list strong {
+            color: #241d26;
+        }
+
+        .token-hooks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .token-item {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e5e5e8;
+        }
+
+        .token-item strong {
+            color: #241d26;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .state-matrix {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .state-matrix table {
+            min-width: 800px;
+        }
+
+        .figma-checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .checklist-item::before {
+            content: "✅";
+            margin-right: 0.5rem;
+        }
+
+        .platform-adapters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .platform-item {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e5e5e8;
+        }
+
+        .platform-item strong {
+            color: #241d26;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e5e8;
+            text-align: center;
+            color: #4c4d52;
+        }
+
+        .footer strong {
+            color: #241d26;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .do-dont {
+                grid-template-columns: 1fr;
+            }
+            
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🧩 Component API Template - Button v2</h1>
+
+    <h2>1) Overview</h2>
+    <div class="overview-grid">
+        <div class="overview-item">
+            <strong>Component name:</strong> Button v2
+        </div>
+        <div class="overview-item">
+            <strong>Purpose:</strong> Enhanced button component with comprehensive variant support and improved accessibility.
+        </div>
+        <div class="overview-item">
+            <strong>Common aliases:</strong> Enhanced Button, Advanced Button, M3 Button, Comprehensive Button
+        </div>
+    </div>
+
+    <div class="do-dont">
+        <div class="do">
+            <h4>✅ Do</h4>
+            <ul>
+                <li>Use for primary actions, form submissions, navigation, confirmations</li>
+                <li>Keep labels concise (1-3 words), use action verbs</li>
+            </ul>
+        </div>
+        <div class="dont">
+            <h4>❌ Don't</h4>
+            <ul>
+                <li>Avoid for secondary information display, decorative elements, multiple primary actions on same screen</li>
+                <li>Don't truncate button text</li>
+            </ul>
+        </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <h2>2) Anatomy (named parts)</h2>
+    <p>List reusable, neutral part names you'll reference in Figma layers and code slots.</p>
+    <div class="anatomy-list">
+        <ul>
+            <li><strong>container</strong> — interactive/visual wrapper with background, border, and corner radius</li>
+            <li><strong>leading</strong> — optional start element (icon, avatar, media)</li>
+            <li><strong>content</strong> — primary content (text/value/children)</li>
+            <li><strong>trailing</strong> — optional end element (icon, chevron, external link)</li>
+            <li><strong>assistive</strong> — N/A for buttons</li>
+        </ul>
+    </div>
+    <p>Use consistent names across Figma layers and code slots.</p>
+
+    <hr class="section-divider">
+
+    <h2>3) Properties (Design & Code)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Group</th>
+                <th>Prop</th>
+                <th>Type / Values</th>
+                <th>Default</th>
+                <th>Notes / Behavior</th>
+                <th>Figma property?</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Identity</strong></td>
+                <td>variant</td>
+                <td>"primary" | "secondary" | "transparent" | "success" | "destructive" | "transparentDestructive" | "transparentDense"</td>
+                <td>"primary"</td>
+                <td>Visual tone only.</td>
+                <td>✅ Variant</td>
+            </tr>
+            <tr>
+                <td><strong>Semantics</strong></td>
+                <td>emphasis</td>
+                <td>"default" | "destructive" | "success"</td>
+                <td>"default"</td>
+                <td>Semantic color intent.</td>
+                <td>✅ Variant / Toggle</td>
+            </tr>
+            <tr>
+                <td><strong>Content</strong></td>
+                <td>content</td>
+                <td>string</td>
+                <td>—</td>
+                <td>Main visible text/value.</td>
+                <td>✅ Text</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>leading</td>
+                <td>element / null</td>
+                <td>null</td>
+                <td>Optional start element.</td>
+                <td>✅ Instance swap + toggle</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>trailing</td>
+                <td>element / null</td>
+                <td>null</td>
+                <td>Optional end element.</td>
+                <td>✅ Instance swap + toggle</td>
+            </tr>
+            <tr>
+                <td><strong>Alignment</strong></td>
+                <td>align</td>
+                <td>"start" | "center" | "end"</td>
+                <td>"center"</td>
+                <td>Distribution of children.</td>
+                <td>✅ Variant</td>
+            </tr>
+            <tr>
+                <td><strong>Size</strong></td>
+                <td>size</td>
+                <td>"s" | "m" | "l"</td>
+                <td>"m"</td>
+                <td>Maps to container sizing tokens.</td>
+                <td>✅ Variant</td>
+            </tr>
+            <tr>
+                <td><strong>Density</strong></td>
+                <td>density</td>
+                <td>"default" | "compact"</td>
+                <td>"default"</td>
+                <td>Controls padding scale.</td>
+                <td>✅ Variant</td>
+            </tr>
+            <tr>
+                <td><strong>Width</strong></td>
+                <td>fullWidth</td>
+                <td>boolean</td>
+                <td>false</td>
+                <td>Stretch to parent width.</td>
+                <td>✅ Toggle</td>
+            </tr>
+            <tr>
+                <td><strong>State</strong></td>
+                <td>state</td>
+                <td>"default" | "hover" | "pressed" | "disabled" | "loading"</td>
+                <td>"default"</td>
+                <td>Visual state.</td>
+                <td>✅ Variant</td>
+            </tr>
+            <tr>
+                <td><strong>A11y</strong></td>
+                <td>accessibilityLabel</td>
+                <td>string / null</td>
+                <td>null</td>
+                <td>Required if no visible text.</td>
+                <td>❌ Code only</td>
+            </tr>
+            <tr>
+                <td><strong>Telemetry</strong></td>
+                <td>analyticsId</td>
+                <td>string / null</td>
+                <td>null</td>
+                <td>For instrumentation/tests.</td>
+                <td>❌ Code only</td>
+            </tr>
+            <tr>
+                <td><strong>Platform</strong></td>
+                <td>href</td>
+                <td>string / null</td>
+                <td>null</td>
+                <td>Web navigation URL.</td>
+                <td>❌ Code only</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>type</td>
+                <td>"button" | "submit" | "reset"</td>
+                <td>"button"</td>
+                <td>Form behavior.</td>
+                <td>❌ Code only</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr class="section-divider">
+
+    <h2>4) Layout Rules</h2>
+    <ul>
+        <li><strong>Container sizing:</strong> {Size.ContainerHeight.s|m|l} as minHeight tokens (s=32px, m=48px, l=48px).</li>
+        <li><strong>48 px min touch target:</strong> All interactive components must provide at least 48 px in one dimension. If the visual design is smaller, add outer/invisible padding.</li>
+        <li><strong>Padding:</strong> Horizontal/vertical padding from {Spacing.Container.Horizontal.*} (8px s, 16px m, 20px l).</li>
+        <li><strong>Element gaps:</strong> {Spacing.Element.Gap} between leading / content / trailing (8px).</li>
+        <li><strong>Alignment logic:</strong> Center aligns content by default, start/end distribute children accordingly.</li>
+        <li><strong>Focus/ink:</strong> Outer wrapper draws focus/elevation; inner surface draws bg + radius (8px corner radius).</li>
+    </ul>
+
+    <hr class="section-divider">
+
+    <h2>5) Token Hooks</h2>
+    <div class="token-hooks">
+        <div class="token-item">
+            <strong>Size:</strong> {Size.ContainerHeight.s|m|l}
+        </div>
+        <div class="token-item">
+            <strong>Spacing:</strong> {Spacing.Container.Horizontal.*}, {Spacing.Element.Gap}
+        </div>
+        <div class="token-item">
+            <strong>Colors:</strong> {color.Primary}, {color.Secondary}, {color.Success}, {color.Error}, {color.SurfaceVariant}
+        </div>
+        <div class="token-item">
+            <strong>Radius:</strong> {CornerRadius.Soft} (8px)
+        </div>
+        <div class="token-item">
+            <strong>Typography:</strong> {Typography.Font.Button}, {Typography.LineHeight.Tight}
+        </div>
+        <div class="token-item">
+            <strong>Motion (if applicable):</strong> {Motion.Duration.*}, {Motion.Easing.*}
+        </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <h2>6) States & Variants Matrix</h2>
+    <div class="state-matrix">
+        <table>
+            <thead>
+                <tr>
+                    <th>Variant</th>
+                    <th>Default</th>
+                    <th>Hover</th>
+                    <th>Pressed</th>
+                    <th>Focus</th>
+                    <th>Disabled</th>
+                    <th>Loading</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Primary</td>
+                    <td>#241d26 bg, #fbf6f1 text</td>
+                    <td>Darker primary</td>
+                    <td>Darkest primary</td>
+                    <td>Primary ring</td>
+                    <td>#e5e5e8 bg, #4c4d52 text</td>
+                    <td>Primary bg, spinner</td>
+                </tr>
+                <tr>
+                    <td>Secondary</td>
+                    <td>#ffffff bg, #241d26 border</td>
+                    <td>#f5f5f5 bg</td>
+                    <td>#e5e5e8 bg</td>
+                    <td>Primary ring</td>
+                    <td>#e5e5e8 bg, #4c4d52 text</td>
+                    <td>White bg, spinner</td>
+                </tr>
+                <tr>
+                    <td>Transparent</td>
+                    <td>Transparent, #241d26 text</td>
+                    <td>#f5f5f5 bg</td>
+                    <td>#e5e5e8 bg</td>
+                    <td>Primary ring</td>
+                    <td>#4c4d52 text</td>
+                    <td>Transparent, spinner</td>
+                </tr>
+                <tr>
+                    <td>Success</td>
+                    <td>#0e881b bg, #ffffff text</td>
+                    <td>#12731c bg</td>
+                    <td>Darker success</td>
+                    <td>Success ring</td>
+                    <td>#e5e5e8 bg, #4c4d52 text</td>
+                    <td>Success bg, spinner</td>
+                </tr>
+                <tr>
+                    <td>Destructive</td>
+                    <td>#e0001a bg, #ffffff text</td>
+                    <td>#d83438 bg</td>
+                    <td>#c20017 bg</td>
+                    <td>Error ring</td>
+                    <td>#e5e5e8 bg, #4c4d52 text</td>
+                    <td>Error bg, spinner</td>
+                </tr>
+                <tr>
+                    <td>Transparent Destructive</td>
+                    <td>Transparent, #e0001a text</td>
+                    <td>#f9e8ea bg</td>
+                    <td>#f9e8ea bg</td>
+                    <td>Error ring</td>
+                    <td>#4c4d52 text</td>
+                    <td>Transparent, spinner</td>
+                </tr>
+                <tr>
+                    <td>Transparent Dense</td>
+                    <td>Transparent, #241d26 text</td>
+                    <td>#f5f5f5 bg</td>
+                    <td>#e5e5e8 bg</td>
+                    <td>Primary ring</td>
+                    <td>#4c4d52 text</td>
+                    <td>Transparent, spinner</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="section-divider">
+
+    <h2>7) Accessibility</h2>
+    <ul>
+        <li><strong>Hit target:</strong> min 48 px (M3 baseline) across all platforms.</li>
+        <li><strong>Keyboard & screen reader:</strong> roles, aria/traits, focus order.</li>
+        <li><strong>Scaling:</strong> size tokens are minHeight; components expand if text scales (Dynamic Type, font scaling).</li>
+        <li><strong>Contrast:</strong> meet WCAG AA/AAA as specified.</li>
+        <li><strong>Assistive text:</strong> for inputs, error/help text linked via aria-describedby.</li>
+    </ul>
+
+    <hr class="section-divider">
+
+    <h2>8) Platform Adapters</h2>
+    <div class="platform-adapters">
+        <div class="platform-item">
+            <strong>Web:</strong> CSS vars, min-height: 48px, flex/grid alignment, outer focus ring.
+        </div>
+        <div class="platform-item">
+            <strong>iOS:</strong> SwiftUI/UIKit, .frame(minHeight: 48), Dynamic Type, avoid clipping focus.
+        </div>
+        <div class="platform-item">
+            <strong>Android:</strong> Compose Modifier.heightIn(min = 48.dp), ripple on shaped surface, respect FontScale.
+        </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <h2>9) Events & Data</h2>
+    <ul>
+        <li><strong>Events:</strong> onPress/onClick, onChange, onFocus/onBlur, etc. (with payloads).</li>
+        <li><strong>Controlled vs uncontrolled:</strong> for inputs/toggles, specify source of truth.</li>
+    </ul>
+
+    <hr class="section-divider">
+
+    <h2>10) Content Rules</h2>
+    <ul>
+        <li><strong>Text:</strong> casing, max length, truncation vs wrapping.</li>
+        <li><strong>Icons/media:</strong> permitted sizes, placement rules, empty states.</li>
+    </ul>
+
+    <hr class="section-divider">
+
+    <h2>11) Performance & Theming</h2>
+    <ul>
+        <li><strong>No layout shift:</strong> keep dimensions stable across states.</li>
+        <li><strong>Theme-ready:</strong> all visuals via semantic tokens; no hard-coded colors.</li>
+    </ul>
+
+    <hr class="section-divider">
+
+    <h2>12) Figma Property Mapping (checklist)</h2>
+    <p>Only add properties that make sense for the component:</p>
+    <div class="figma-checklist">
+        <div class="checklist-item">Variant</div>
+        <div class="checklist-item">Emphasis (or Destructive/Success)</div>
+        <div class="checklist-item">Size</div>
+        <div class="checklist-item">Density</div>
+        <div class="checklist-item">Align</div>
+        <div class="checklist-item">Full width</div>
+        <div class="checklist-item">State</div>
+        <div class="checklist-item">Leading (On/Off + swap)</div>
+        <div class="checklist-item">Trailing (On/Off + swap)</div>
+        <div class="checklist-item">Content (Text)</div>
+    </div>
+
+    <hr class="section-divider">
+
+    <h2>13) Open Questions / Decisions</h2>
+    <p>Keep unresolved design/tech tradeoffs visible (e.g., RTL mirroring, async loading, chip vs. button boundaries).</p>
+
+    <hr class="section-divider">
+
+    <div class="footer">
+        <p><strong>✅ This template is now fully neutral and enforces the M3 48 px min touch target across the board.</strong></p>
+        <p>👉 <strong>This documentation is based on the Panda Design System Button v2 component from Figma node 12720:1498.</strong></p>
+    </div>
+</body>
+</html>
 
